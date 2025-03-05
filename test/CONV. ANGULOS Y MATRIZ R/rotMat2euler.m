@@ -10,9 +10,9 @@ function euler = rotMat2euler(R, secuencia)
 
 % Obtén las ecuaciones de la imagen
 if secuencia == "XYZ"
-    phi = atan(R(2,3)/R(3,3))
-    theta = asin(R(1,3))
-    psi = atan(-R(1,2)/R(1,1))
+    phi = atan(R(2,3)/R(3,3));
+    theta = asin(R(1,3));
+    psi = atan(-R(1,2)/R(1,1));
     euler = [phi;theta;psi];
     %euler = rad2deg(euler);
 
