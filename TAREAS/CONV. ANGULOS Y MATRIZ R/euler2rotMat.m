@@ -15,9 +15,6 @@ psi = euler(3,:);      % psi:   rotación alrededor del eje Z
 %psi = euler(3)
 
 if secuencia == "XYZ"
-    R1 = Rx(phi);
-    R2 = Ry(theta);
-    R3 = Rz(psi);
-    R = (R1 * R2 * R3);
+    R = Rx(phi)  * Ry(theta) * Rz(psi) ;
 end
 
