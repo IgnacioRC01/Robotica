@@ -1,6 +1,0 @@
-roboticstoolbox-python
-spatialmath-python
-numpy
-matplotlib
-ipykernel
-ipywidgets

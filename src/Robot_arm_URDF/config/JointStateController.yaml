@@ -1,4 +1,0 @@
-# Controlador que publica continuamente los estados/posiciones de las articulaciones. 
-joint_state_controller:
-  type: "joint_state_controller/JointStateController"
-  publish_rate: 50  # Frecuencia en Hz
