@@ -1,24 +1,94 @@
 \section{Dinámica} \label{sec:dinamica}
 
-La verdad, no les expliqué mucho sobre esta unidad, pero pueden hablar sobre las ecuaciones que vienen en el powerpoint (el cual subí tarde porque se me corrompió)
+La dinámica de un robot describe cómo las fuerzas aplicadas en sus articulaciones generan movimientos. A diferencia de la cinemática, la dinámica incluye efectos de masa, inercia y fuerzas externas.
 
-Hablen sobre el modelo dinámico estandar de un robot, la matriz de masa o inercia, la matriz de coriolis y el vector de gravedad. 
+El modelo dinámico estándar de un robot manipulador se expresa mediante la ecuación de Euler-Lagrange:
+
+\begin{equation}
+	\mathbf{M}(q)\ddot{q} + \mathbf{C}(q,\dot{q})\dot{q} + \mathbf{g}(q) = \boldsymbol{\tau}
+\end{equation}
+
+Donde:
+\begin{itemize}
+	\item \( q \in \mathbb{R}^n \): vector de coordenadas articulares.
+	\item \( \dot{q} \): vector de velocidades articulares.
+	\item \( \ddot{q} \): vector de aceleraciones articulares.
+	\item \( \boldsymbol{\tau} \): vector de torques o fuerzas generadas por los actuadores.
+	\item \( \mathbf{M}(q) \): matriz de masa o inercia.
+	\item \( \mathbf{C}(q, \dot{q}) \): matriz de Coriolis y fuerzas centrífugas.
+	\item \( \mathbf{g}(q) \): vector de gravedad.
+\end{itemize}
+ 
 
 \subsection{Matriz de masa o inercia}
-Expliquen cómo el vector de masa o inercia define la aceleración máxima.
+
+
+La matriz de masa o inercia \( \mathbf{M}(q) \) describe cómo la masa del robot está distribuida en función de su configuración \( q \). Es una matriz simétrica y definida positiva, que relaciona los torques aplicados con las aceleraciones articulares:
+
+\[
+\ddot{q} = \mathbf{M}^{-1}(q) \boldsymbol{\tau}
+\]
+
+Para un mismo torque \( \boldsymbol{\tau} \), una matriz de inercia mayor implica una aceleración menor. Por lo tanto, \( \mathbf{M}(q) \) define los límites físicos del movimiento del robot y debe ser considerada en el diseño de controladores y trayectorias.
+
 
 \subsection{Matriz de coriolis}
 
+\(\mathbf{C}(q,\dot{q}) \)
+Representa las fuerzas internas debidas al movimiento del robot, como los efectos de Coriolis y las fuerzas centrífugas. Se calcula usando los símbolos de Christoffel:
+
+\[
+C_{ij} = \sum_{k=1}^{n} \frac{1}{2} \left( \frac{\partial M_{ij}}{\partial q_k} + \frac{\partial M_{ik}}{\partial q_j} - \frac{\partial M_{jk}}{\partial q_i} \right) \dot{q}_k
+\]
+
+
 \subsection{Vector de gravedad}
 
-Expliquen por qué el vector de gravedad en su valor máximo (cuando el robot está extendido horizontalmente) debe ser contrarrestado con la fuerza de cada motor
+
+El vector de gravedad \( \mathbf{g}(q) \) representa los torques necesarios para contrarrestar el peso de los eslabones del robot. Este vector alcanza su \textbf{valor máximo cuando el robot está completamente extendido en posición horizontal}, debido a que:
+
+\begin{itemize}
+	\item El torque gravitacional \( \tau = r \cdot m \cdot g \) es máximo cuando el ángulo entre el enlace y la dirección de la gravedad es de 90°.
+	\item En esta configuración, cada articulación debe soportar su propio peso y el de todos los eslabones posteriores, generando una carga acumulativa.
+\end{itemize}
+
+Para mantener el robot estable en esta posición, los motores deben aplicar un torque igual y opuesto al generado por la gravedad. De no hacerlo, el robot cedería, afectando la precisión y el control. Por ello, esta condición es clave en el diseño y selección de actuadores.
+
+
 
 \subsection{Fricción}
-Expliquen qué es la fricción en general.
+
+
+\subsection*{Fricción}
+
+La fricción es una fuerza que se opone al movimiento relativo entre dos superficies en contacto. Es causada por las irregularidades microscópicas entre dichas superficies y por interacciones a nivel molecular.
+
+En general, se distinguen dos tipos principales de fricción:
+
+
+En los sistemas mecánicos, especialmente en robótica, es común modelar dos tipos principales de fricción que afectan el movimiento de las articulaciones: la fricción estática o seca, y la fricción dinámica o viscosa.
+
 
 \subsubsection{Fricción estática o seca}
 
+también conocida como fricción de Coulomb, es la fuerza que se opone al inicio del movimiento entre dos superficies en contacto. Tiene un valor máximo y constante que debe ser superado para que comience el deslizamiento. Esta fricción no depende de la velocidad, y se modela comúnmente como:
+\[
+\tau_{\text{seca}} = \tau_c \cdot \text{sign}(\dot{q})
+\]
+donde \( \tau_c \) es el valor constante de fricción de Coulomb, y \( \text{sign}(\dot{q}) \) indica la dirección del movimiento.
+
 \subsubsection{Fricción dinámica o viscosa}
 
+
+aparece cuando ya existe movimiento entre las superficies. Esta fricción es proporcional a la velocidad relativa entre las partes, y se modela como:
+\[
+\tau_{\text{viscosa}} = b \cdot \dot{q}
+\]
+donde \( b \) es el coeficiente de fricción viscosa, y \( \dot{q} \) es la velocidad de la articulación. Esta fricción es importante en movimientos continuos o rápidos.
+
+
 \subsection{Perturbaciones}
-Aquí expliquen qué es una perturbación en general sin profundizar mucho.
+
+En el contexto de sistemas mecánicos y de control, una perturbación es cualquier influencia externa o interna no deseada que afecta el comportamiento esperado del sistema. Las perturbaciones pueden ser causadas por factores como fuerzas externas, variaciones en la carga, errores de modelado, ruido en sensores o fricción no modelada.
+
+Aunque no siempre se pueden eliminar, las perturbaciones deben considerarse al diseñar sistemas de control, ya que pueden afectar la precisión, estabilidad y desempeño del robot.

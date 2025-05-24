@@ -1,14 +1,156 @@
 \section{Cinemática} \label{sec:cinematica}
 
-Explicar su definición en base a lo que viene en libros o de los archivos de Matlab. Diferenciar entre \textbf{Cinemática directa} y \textbf{Cinemática inversa}.
-Para el proceso sobre cómo se llevó a cabo el algoritmo en Matlab, ir a la  \hyperref[sec:proceso_cinematica]{sección del proceso de Cinemática}.
+La cinemática es una rama de la mecánica clásica que se encarga del estudio del movimiento de los cuerpos sin considerar las fuerzas que lo causan. Es decir, se centra en describir cómo se mueven los objetos, especificando variables como posición, velocidad y aceleración, generalmente en función del tiempo.
+
+\textbf{Definición de Cinemática (según fuentes académicas y MATLAB).}
+
+
+Según libros clásicos de robótica y mecánica, como "Introduction to Robotics: Mechanics and Control" de John J. Craig, la cinemática en el contexto de la robótica se refiere al estudio de la posición y orientación de un robot (especialmente de su efector final) respecto a un marco de referencia, y cómo cambian estas variables con respecto al movimiento de sus articulaciones.
+
+En el entorno de MATLAB, particularmente en su toolbox de robótica (Robotics System Toolbox), la cinemática también se entiende como el modelo matemático que relaciona los parámetros articulares de un robot con la posición y orientación de su efector final. MATLAB proporciona funciones como:
+
+getTransform(robot, configuration, endEffector) para obtener la cinemática directa.
+
+Algoritmos de solución de cinemática inversa con objetos como inverseKinematics.
 
 \subsection{Cinemática Directa}
-Explicar sobre la definición geométrica usando Denavit Hartenberg con el algoritmo y las matemáticas.
+La definición geométrica de la cinemática de robots se basa en representar el movimiento de cada eslabón (o segmento) de un manipulador mediante transformaciones geométricas, típicamente matrices de transformación homogénea. El método más comúnmente usado para modelar estas transformaciones es el algoritmo de Denavit-Hartenberg (D-H).
+
+
+\textbf{Parametros DH}
+\begin{table}[H]\
+	\centering
+	\begin{tabular}{|c|c|p{9cm}|}
+		\hline
+		\textbf{Parámetro} & \textbf{Símbolo} & \textbf{Descripción} \\
+		\hline
+		Longitud del eslabón & $a_i$ & Distancia entre los ejes $Z_{i-1}$ y $Z_i$, medida a lo largo del eje $X_i$. \\
+		\hline
+		Ángulo del eslabón & $\alpha_i$ & Ángulo entre los ejes $Z_{i-1}$ y $Z_i$, medido alrededor del eje $X_i$. \\
+		\hline
+		Desplazamiento del eslabón & $d_i$ & Distancia entre los orígenes de los sistemas de coordenadas $O_{i-1}$ y $O_i$, medida sobre el eje $Z_{i-1}$. \\
+		\hline
+		Ángulo articular & $\theta_i$ & Ángulo entre los ejes $X_{i-1}$ y $X_i$, medido alrededor del eje $Z_{i-1}$. \\
+		\hline
+	\end{tabular}
+	\caption{Parámetros del modelo Denavit-Hartenberg}
+	\label{tabla:dh}
+\end{table}
+
+
+\textbf{Matriz de transformación homogénea (Ai)}
+
+
+\[
+\mathbf{A}_i =
+\begin{bmatrix}
+	\cos\theta_i & -\sin\theta_i\cos\alpha_i & \sin\theta_i\sin\alpha_i & a_i\cos\theta_i \\
+	\sin\theta_i & \cos\theta_i\cos\alpha_i & -\cos\theta_i\sin\alpha_i & a_i\sin\theta_i \\
+	0            & \sin\alpha_i              & \cos\alpha_i              & d_i \\
+	0            & 0                         & 0                         & 1
+\end{bmatrix}
+\]
+
+
 
 \subsection{Cinemática Diferencial}
-Aquí explicarán sobre el jacobiano para la cinemática diferencial.
+
+La \textbf{cinemática diferencial} estudia cómo las velocidades articulares de un robot afectan la velocidad lineal y angular del efector final. Esta relación se describe mediante una herramienta fundamental llamada la \textbf{matriz Jacobiana}.
+
+Dado un robot con $n$ grados de libertad y un vector de variables articulares $\boldsymbol{q} = [q_1, q_2, \dots, q_n]^T$, y una función $\boldsymbol{x} = f(\boldsymbol{q})$ que representa la posición y orientación del efector final, se define la relación diferencial como:
+
+\[
+\dot{\boldsymbol{x}} = \mathbf{J}(\boldsymbol{q}) \, \dot{\boldsymbol{q}}
+\]
+
+donde:
+\begin{itemize}
+	\item $\dot{\boldsymbol{x}}$ es el vector de velocidad del efector final,
+	\item $\dot{\boldsymbol{q}}$ es el vector de velocidades articulares,
+	\item $\mathbf{J}(\boldsymbol{q})$ es la matriz Jacobiana.
+\end{itemize}
+
+\subsection*{Definición del Jacobiano}
+
+La \textbf{matriz Jacobiana} se define como la matriz de derivadas parciales que relaciona cambios infinitesimales en las variables articulares con los cambios en la posición del efector:
+
+\[
+\mathbf{J} = \frac{\partial \boldsymbol{x}}{\partial \boldsymbol{q}} =
+\begin{bmatrix}
+	\frac{\partial x_1}{\partial q_1} & \cdots & \frac{\partial x_1}{\partial q_n} \\
+	\vdots & \ddots & \vdots \\
+	\frac{\partial x_m}{\partial q_1} & \cdots & \frac{\partial x_m}{\partial q_n}
+\end{bmatrix}
+\]
+
+Para manipuladores tridimensionales, el Jacobiano se divide comúnmente en dos componentes:
+
+\[
+\mathbf{J} =
+\begin{bmatrix}
+	\mathbf{J}_v \\
+	\mathbf{J}_\omega
+\end{bmatrix}
+\]
+
+donde:
+\begin{itemize}
+	\item $\mathbf{J}_v$ relaciona las velocidades articulares con la velocidad lineal del efector final.
+	\item $\mathbf{J}_\omega$ relaciona las velocidades articulares con la velocidad angular.
+\end{itemize}
+
+\subsection*{Importancia del Jacobiano}
+
+El Jacobiano es esencial en robótica porque:
+\begin{itemize}
+	\item Permite calcular la velocidad cartesiana del efector a partir de velocidades articulares.
+	\item Ayuda a identificar y evitar \textbf{singularidades}, donde el robot pierde movilidad instantánea.
+	\item Es fundamental en el \textbf{control en espacio operativo}, donde se desea controlar directamente la velocidad del efector.
+	\item Se usa en dinámica para relacionar fuerzas y torques mediante la transposición del Jacobiano.
+\end{itemize}
+
+\subsection*{Uso en MATLAB}
+
+En MATLAB, utilizando el \textit{Robotics System Toolbox}, se puede calcular el Jacobiano geométrico de un robot con:
+
+\begin{verbatim}
+	J = geometricJacobian(robot, config, endEffectorName);
+\end{verbatim}
+
+Este comando devuelve la matriz Jacobiana evaluada en la configuración deseada del robot.
+
 
 \subsection{Cinemática Inversa}
-Explicar su definición y cómo se relaciona el gradiente con el jacobiano. Cabe destacar que existen multitud de métodos y en mi clase solo usaron un método, pero aquí pueden explicar las imágenes que vienen en Matlab.
+
+
+La \textbf{cinemática inversa} consiste en encontrar el conjunto de variables articulares $\boldsymbol{q}$ que permiten alcanzar una posición y orientación deseadas del efector final $\boldsymbol{x}_d$. Matemáticamente, se plantea como:
+
+\[
+\text{Dado: } \boldsymbol{x}_d = f(\boldsymbol{q}) \quad \Rightarrow \quad \text{Hallar: } \boldsymbol{q}
+\]
+
+A diferencia de la cinemática directa, este problema puede tener múltiples soluciones, una sola o ninguna, dependiendo de la geometría del manipulador y de su configuración actual.
+
+\subsection*{Método basado en el Jacobiano y el Gradiente}
+
+Una forma común de resolver la cinemática inversa de manera iterativa es minimizar el error:
+
+\[
+\boldsymbol{e}(\boldsymbol{q}) = \boldsymbol{x}_d - f(\boldsymbol{q})
+\]
+
+El gradiente del error cuadrático respecto a las variables articulares está relacionado con el Jacobiano:
+
+\[
+\frac{\partial}{\partial \boldsymbol{q}} \left\| \boldsymbol{e}(\boldsymbol{q}) \right\|^2 = -2 \mathbf{J}^T(\boldsymbol{q}) \boldsymbol{e}(\boldsymbol{q})
+\]
+
+Esto lleva al \textbf{método del Jacobiano transpuesto}:
+
+\[
+\boldsymbol{q}_{k+1} = \boldsymbol{q}_k + \alpha \mathbf{J}^T(\boldsymbol{q}_k) \boldsymbol{e}(\boldsymbol{q}_k)
+\]
+
+donde $\alpha$ es un escalar que controla el paso de la iteración.
+
 
