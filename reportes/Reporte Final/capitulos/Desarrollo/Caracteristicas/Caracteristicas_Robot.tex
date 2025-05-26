@@ -1,41 +1,43 @@
 \section{Características del Robot} \label{sec:caracteristicas_del_robot}
 
-En esta parte deben de explicar en una tabla la información principal del robot. Para ello, pueden cambiar el archivo de excel \ffile{Robot\_Resumen.xlsx} que está en \ffolder{tablas} y pedirle a ChatGPT que lo convierta a \LaTeX o simplemente pasarlo a un convertidor en línea.
 
-\begin{table}[ht]
+En esta sección se describe la estructura cinemática del robot utilizando el método de Denavit-Hartenberg (DH). Este método permite representar la geometría del manipulador mediante cuatro parámetros para cada articulación o eslabón, facilitando la formulación de la cinemática directa e inversa.
+
+\subsection*{Descripción de los parámetros}
+
+Los parámetros utilizados son los siguientes:
+
+\begin{itemize}
+	\item \textbf{\(\theta\)}: Ángulo de rotación alrededor del eje \(z\) (solo para articulaciones rotacionales).
+	\item \textbf{\(d\)}: Desplazamiento a lo largo del eje \(z\) (solo para articulaciones prismáticas).
+	\item \textbf{\(a\)}: Longitud del eslabón o distancia entre los ejes \(z\), medida sobre el eje \(x\).
+	\item \textbf{\(\alpha\)}: Ángulo de torsión entre ejes \(z\), medido sobre el eje \(x\).
+	\item \textbf{Tipo}: Tipo de articulación. 'r' indica rotacional y 'p' prismática.
+	\item \textbf{\(q_{\text{min}}\) y \(q_{\text{max}}\)}: Límites inferiores y superiores del rango de movimiento de cada articulación.
+	\item \textbf{\(\dot{q}_{\text{max}}\)}: Velocidad máxima permitida para la articulación.
+	\item \textbf{\(\ddot{q}_{\text{max}}\)}: Aceleración máxima permitida.
+	\item \textbf{\(\tau\)}: Torque máximo para articulaciones rotacionales o fuerza máxima para articulaciones prismáticas.
+	\item \textbf{\(\mu_s\)}: Coeficiente de fricción estática.
+	\item \textbf{\(\mu_k\)}: Coeficiente de fricción dinámica.
+\end{itemize}
+
+\subsection*{Tabla de parámetros DH y límites dinámicos}
+
+A continuación, se presenta la tabla DH del robot utilizado en este trabajo, junto con sus límites dinámicos para cada articulación:
+
+\begin{table}[H]
 	\centering
-	\caption{Parámetros de Denavit Hartenberg y límites del robot}
-	\label{tab:parametros_robot}
-	\begin{tabular}{ l|cccccccccccc
-		}
-		\toprule
-		N & {$\theta$} & {$d$} & {$a$} & {$\alpha$} & {tipo} 
-		& {$q_{\min}$} & {$q_{\max}$} 
-		& {$\dot q_{\max}$} & {$\ddot q_{\max}$} 
-		& {$\tau$} & {$\mu_s$} & {$\mu_k$} \\
-		\midrule
-		1 & 0 & 7 & 3  & 0   & r & -90 & 90 & 180 & 360 &  8  & 0.1 & 0.2 \\
-		2 & 0 & 0 & 3  & -90 & r & -90 & 90 & 180 & 360 & 50  & 0.1 & 0.2 \\
-		3 & 0 & 2 & 0  & -90 & r & -90 & 90 & 180 & 360 & 30  & 0.1 & 0.2 \\
-		4 & 0 & 5 & 0  & 0   & p &   3 &  7 &   1 &   2 & 2  & 0.1 & 0.2 \\
-		\bottomrule
+	\caption{Parámetros DH y límites dinámicos del robot}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+		\hline
+		\textbf{N} & \(\theta\) & \(d\) & \(a\) & \(\alpha\) & Tipo & \(q_{\text{min}}\) & \(q_{\text{max}}\) & \(\dot{q}_{\text{max}}\) & \(\ddot{q}_{\text{max}}\) & \(\tau\) & \(\mu_s\) & \(\mu_k\) \\
+		\hline
+		1 & 0 & 7 & 3 & 0 & r & -90 & 90 & 180 & 360 & 8  & 0.1 & 0.2 \\
+		2 & 0 & 0 & 3 & -90 & r & -90 & 90 & 180 & 360 & 50 & 0.1 & 0.2 \\
+		3 & 0 & 2 & 2 & -90 & r & -90 & 90 & 180 & 360 & 30 & 0.1 & 0.2 \\
+		4 & 0 & 5 & 0 & 0 & p & 3 & 7 & 1 & 2 & 10 & 0.1 & 0.2 \\
+		\hline
 	\end{tabular}
+	\label{tab:parametros_dh_robot}
 \end{table}
-\bigskip
-\noindent
-\textbf{Donde (cambien las unidades):}
-\begin{description}
-	\item[N] Número de la articulación.
-	\item[\(\theta\)] Ángulo articular (grados).
-	\item[\(d\)] Desplazamiento articular (unidades de longitud).
-	\item[\(a\)] Longitud del eslabón (unidades de longitud).
-	\item[\(\alpha\)] Ángulo de torsión DH (grados).
-	\item[tipo] ‘r’ para articulación rotacional, ‘p’ para prismática.
-	\item[\(q_{\min}\), \(q_{\max}\)] Límites de posición (grados o unidades de desplazamiento).
-	\item[\(\dot q_{\max}\)] Límite de velocidad (grados/s o unidades/s).
-	\item[\(\ddot q_{\max}\)] Límite de aceleración (grados/s² o unidades/s²).
-	\item[\(\tau\)] Torque o fuerza máxima permitido (\(N \cdot m\) o \(N\)).
-	\item[\(\mu_s\)] Fricción estática (\(N\) o \(N \cdot m\)).
-	\item[\(\mu_k\)] Fricción cinética (\(N \cdot m \cdot s\) o \(\frac{N \cdot m \cdot s}{rad}\)).
-\end{description}
 

@@ -2,6 +2,8 @@
 
 La cinemática es una rama de la mecánica clásica que se encarga del estudio del movimiento de los cuerpos sin considerar las fuerzas que lo causan. Es decir, se centra en describir cómo se mueven los objetos, especificando variables como posición, velocidad y aceleración, generalmente en función del tiempo.
 
+\cite{conceptoCinematica} dice lo que es la cinemática.
+
 \textbf{Definición de Cinemática (según fuentes académicas y MATLAB).}
 
 
@@ -16,6 +18,7 @@ Algoritmos de solución de cinemática inversa con objetos como inverseKinematic
 \subsection{Cinemática Directa}
 La definición geométrica de la cinemática de robots se basa en representar el movimiento de cada eslabón (o segmento) de un manipulador mediante transformaciones geométricas, típicamente matrices de transformación homogénea. El método más comúnmente usado para modelar estas transformaciones es el algoritmo de Denavit-Hartenberg (D-H).
 
+En \cite{uclmFKIK} se muestran los conceptos de cinemática directa.
 
 \textbf{Parametros DH}
 \begin{table}[H]\
@@ -56,6 +59,8 @@ La definición geométrica de la cinemática de robots se basa en representar el
 \subsection{Cinemática Diferencial}
 
 La \textbf{cinemática diferencial} estudia cómo las velocidades articulares de un robot afectan la velocidad lineal y angular del efector final. Esta relación se describe mediante una herramienta fundamental llamada la \textbf{matriz Jacobiana}.
+
+Cinemática diferencial \cite{roboticossCinematica}.
 
 Dado un robot con $n$ grados de libertad y un vector de variables articulares $\boldsymbol{q} = [q_1, q_2, \dots, q_n]^T$, y una función $\boldsymbol{x} = f(\boldsymbol{q})$ que representa la posición y orientación del efector final, se define la relación diferencial como:
 

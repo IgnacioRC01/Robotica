@@ -1,4 +1,30 @@
 \chapter{Resultados} \label{chap:resultados}
-Aquí pondrán las gráficas que obtuvieron en la simulación de matlab para el robot (si las tienen), y las explicarán.
+\textbf{Cinematica inversa}
 
-También mostrarán capturas de pantalla de cómo se ve en Gazebo el robot y en RViz, ya sea que funcione o no, para el cambio de trayectoria. Describirán lo que ocurre y por qué (si es que saben).
+\begin{figure} [h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"../cinematica inversa/img/graficas_taryectoria 2"}
+	\caption{Cinematica inversa}
+	\label{fig:graficastaryectoria-2}
+\end{figure}
+
+\begin{figure} [h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{"../cinematica inversa/img/cinematica articular_trayectoria2"}
+	\caption{Cinemática inversa}
+	\label{fig:cinematica-articulartrayectoria2}
+\end{figure}
+\newpage
+
+\subsection{Cinemática Articular}
+La Figura muestra la evolución temporal de las variables articulares del robot, correspondientes a cuatro grados de libertad. En la primera fila se grafican la posición angular $\theta$, velocidad angular $\dot{\theta}$ y aceleración angular $\ddot{\theta}$ de tres articulaciones rotacionales. En la segunda fila, se presenta la posición lineal $d$, velocidad lineal $\dot{d}$ y aceleración lineal $\ddot{d}$ de una articulación prismática. 
+
+Se puede observar que las trayectorias están definidas mediante perfiles de velocidad trapezoidales, que permiten movimientos suaves y controlados. Las aceleraciones muestran transiciones bruscas entre fases de movimiento constante y fases de aceleración/desaceleración, lo cual es típico en sistemas con interpolación por segmentos lineales en el espacio de las articulaciones.
+
+
+\subsection{Cinemática del Efector Final}
+La Figura muestra la evolución de la posición, velocidad y aceleración del efector final tanto en coordenadas cartesianas como angulares. En la primera fila se observa que la posición en los ejes $X$ y $Y$ permanece constante, mientras que el eje $Z$ varía, lo que indica un movimiento predominantemente vertical. La velocidad lineal $v_z$ y la aceleración $a_z$ también reflejan este comportamiento.
+
+En la segunda fila se presenta la orientación del efector final usando ángulos de Euler ($\phi$, $\theta$, $\psi$). En este caso, solo el ángulo $\psi$ cambia con el tiempo, lo que implica una rotación sobre el eje $Z$. Las gráficas de velocidad angular y aceleración angular muestran un perfil trapezoidal en $\dot{\psi}$ y una aceleración escalonada en $\ddot{\psi}$, típicos de un control de trayectoria planificado con perfiles suaves pero definidos.
+
+

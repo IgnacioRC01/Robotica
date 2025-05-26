@@ -1,1 +1,3 @@
-	pip install latexminted==0.5.1
+		% Pulsa Ctrl + Clic Izquierdo en bibliografia para entrar.
+		\bibliography{bibliografia}
+	\end{document}

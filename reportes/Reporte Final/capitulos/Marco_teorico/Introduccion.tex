@@ -1,6 +1,57 @@
 \chapter{Marco Teórico} 
 \label{chap:marco_teorico}
 
-Esta es una pequeña introducción que provee una visión general del Marco Teórico que sustenta el proyecto de robótica. 
+La cinemática es una rama de la mecánica que estudia el movimiento de los cuerpos sin considerar las fuerzas que lo originan. En robótica, se enfoca en describir la posición, orientación, velocidad y aceleración del efector final de un robot respecto a un sistema de referencia, en función de las variables articulares del manipulador.
 
-Aquí deben definir qué es la \textit{Cinemática}, la \textit{Dinámica} y el uso de \textit{ROS} en robótica. Deben explicar brevemente cómo cada una de estas disciplinas contribuye al control y simulación de manipuladores. Cabe señalar que las ecuaciones principales pueden obtenerse del las diapositivas de PowerPoint o desde los códigos de MATLAB. El apartado de ROS debe completarse con una pequeña búsqueda en Internet para describir su arquitectura básica y casos de uso en simulación.
+Se distinguen tres tipos principales:
+
+\begin{itemize}
+	\item \textbf{Cinemática directa:} calcula la posición y orientación del efector final a partir de los ángulos o desplazamientos articulares. Se modela mediante matrices de transformación homogénea, comúnmente usando el método de Denavit-Hartenberg (D-H), el cual define parámetros como longitud, ángulo, desplazamiento y rotación entre eslabones consecutivos.
+	
+	\item \textbf{Cinemática diferencial:} relaciona las velocidades articulares con las velocidades lineales y angulares del efector final mediante la \textit{matriz Jacobiana}, una herramienta fundamental para análisis de movimiento, detección de singularidades y diseño de controladores.
+	
+	\item \textbf{Cinemática inversa:} busca encontrar las variables articulares que permiten alcanzar una posición deseada del efector. Puede resolverse analíticamente o mediante métodos numéricos iterativos como el Jacobiano transpuesto.
+\end{itemize}
+
+En MATLAB, herramientas como \texttt{getTransform} e \texttt{inverseKinematics} permiten modelar estos aspectos con precisión, mientras que \texttt{geometricJacobian} facilita el cálculo del Jacobiano.
+
+
+ROS es un marco de desarrollo para sistemas robóticos que ofrece servicios como abstracción de hardware, comunicación entre procesos y herramientas de simulación y visualización. Su arquitectura se basa en los siguientes elementos clave:
+
+\begin{itemize}
+	\item \textbf{Nodos:} procesos individuales que ejecutan funciones específicas.
+	\item \textbf{Temas (topics):} canales de comunicación asincrónica entre nodos mediante mensajes.
+	\item \textbf{Mensajes:} estructuras de datos estandarizadas transmitidas por temas.
+	\item \textbf{Servicios:} comunicaciones sincrónicas entre nodos bajo el modelo cliente-servidor.
+	\item \textbf{Gazebo:} simulador 3D que permite probar robots en entornos físicos virtuales, emitiendo datos hacia ROS.
+	\item \textbf{RViz:} herramienta de visualización 3D que muestra en tiempo real el estado del robot, sensores, trayectorias y marcos de referencia.
+\end{itemize}
+
+ROS permite implementar y probar algoritmos de percepción, control y navegación sin necesidad de hardware real, lo que lo convierte en una herramienta esencial en el desarrollo robótico moderno.
+
+
+La dinámica en robótica analiza cómo las fuerzas aplicadas a las articulaciones generan movimiento, considerando masa, inercia y efectos externos. Su modelado se basa en la ecuación de Euler-Lagrange:
+
+\begin{equation}
+	\mathbf{M}(q)\ddot{q} + \mathbf{C}(q,\dot{q})\dot{q} + \mathbf{g}(q) = \boldsymbol{\tau}
+\end{equation}
+
+donde:
+
+\begin{itemize}
+	\item $\mathbf{M}(q)$: matriz de masa o inercia, describe la resistencia del sistema a la aceleración.
+	\item $\mathbf{C}(q,\dot{q})$: matriz de Coriolis, representa fuerzas internas dependientes del movimiento.
+	\item $\mathbf{g}(q)$: vector de gravedad, indica el torque necesario para sostener el robot frente a la gravedad.
+	\item $\boldsymbol{\tau}$: torques aplicados por los actuadores.
+\end{itemize}
+
+Adicionalmente, la fricción en las articulaciones afecta el desempeño del robot. Se clasifica en:
+
+\begin{itemize}
+	\item \textbf{Fricción estática o seca:} se opone al inicio del movimiento, modelada como $\tau_c \cdot \text{sign}(\dot{q})$.
+	\item \textbf{Fricción dinámica o viscosa:} proporcional a la velocidad, modelada como $b \cdot \dot{q}$.
+\end{itemize}
+
+El análisis dinámico es esencial para diseñar sistemas de control robustos, seleccionar actuadores adecuados y garantizar movimientos precisos y estables.
+
+\newpage
