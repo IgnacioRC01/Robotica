@@ -335,15 +335,15 @@
     <axis
       xyz="0 0 -1" />
     <limit
-      lower="0"
-      upper="-3.142"
+      lower="-3.142"
+      upper="0"
       effort="200"
       velocity="3" />
   </joint>
 
   <transmission name="link_1_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint_1">
+    <joint name="Joint_1">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="link_1_motor">
@@ -354,7 +354,7 @@
 
   <transmission name="link_2_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint_2">
+    <joint name="Joint_2">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="link_2_motor">
@@ -365,7 +365,7 @@
 
   <transmission name="link_3_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint_3">
+    <joint name="Joint_3">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="link_3_motor">
@@ -376,7 +376,7 @@
 
   <transmission name="link_4_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint_4">
+    <joint name="Joint_4">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="link_4_motor">
@@ -387,7 +387,7 @@
 
   <transmission name="link_5_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="joint_5">
+    <joint name="Joint_5">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
     <actuator name="link_5_motor">
