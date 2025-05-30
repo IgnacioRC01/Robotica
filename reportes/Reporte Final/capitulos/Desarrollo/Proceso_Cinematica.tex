@@ -11,9 +11,15 @@ La cinemática de un manipulador robótico comprende el estudio del movimiento d
 
 En conjunto, estos análisis permiten simular, controlar y validar el comportamiento cinemático completo del manipulador robótico, desde las entradas articulares hasta la ejecución precisa de trayectorias en el espacio.
 
-
+\newpage
 \subsection{Cinemática Directa}
 
+\begin{figure} [h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{img/robotcindir}
+	\caption{Robot Cinematica Directa}
+	\label{fig:robotcindir}
+\end{figure}
 
 En esta sección se describe el procedimiento para definir la orientación inicial del efector final del robot, construir la matriz de transformación homogénea de referencia y calcular las trayectorias articulares de forma cíclica.
 
@@ -108,22 +114,33 @@ Una vez construido el modelo del robot, se generan trayectorias articulares usan
 
 Esta información es fundamental para el análisis dinámico del robot, así como para su control. El vector $q(t)$ se puede utilizar como entrada para obtener la pose del efector final mediante la cinemática directa.
 
+\newpage
 
 \subsection{Cinemática Inversa}
 \begin{figure} [h]
 	\centering
-	\includegraphics[width=0.7\linewidth]{"../cinematica inversa/img/solucion trayectoria 2"}
-	\caption{}
-	\label{fig:solucion-trayectoria-2}
+	\includegraphics[width=0.7\linewidth]{img/robotcininv}
+	\caption{Robot Cinematica Inversa}
+	\label{fig:robotcininv}
 \end{figure}
 
-\textbf{Primera ejecución:}
-
--Se alcanzó la solución en 6 iteraciones.
-
--El error final fue 1.55179 × 10 a la -12, lo cual indica una altísima precisión.
-\textbf{Segunda ejecución:}
-
--Se alcanzó la solución en 46 iteraciones.
-
--El error final fue 8.967693 × 10 a la -7, que aunque sigue siendo un valor pequeño, es significativamente mayor que en la primera ejecución.
+\begin{figure} [h]
+	\centering
+	\includegraphics[width=0.7\linewidth]{img/solucionescininv}
+	\caption{Soluciones cinematica inversa}
+	\label{fig:solucionescininv}
+\end{figure}
+		
+	\textbf{Interpretación:}
+	\begin{itemize}
+		\item Todos los casos corresponden a la \textbf{muestra 1}, lo que sugiere que se trata de múltiples ejecuciones del algoritmo sobre la misma configuración inicial.
+		\item El número de iteraciones varía entre 3 y 6, indicando convergencia rápida en general.
+		\item Los errores finales alcanzan valores muy pequeños (del orden de $10^{-11}$ a $10^{-13}$ en algunos casos), lo cual evidencia una alta precisión en la solución encontrada.
+		\item Algunos casos presentan errores mayores ($\sim10^{-7}$), lo que puede deberse a condiciones iniciales diferentes, tolerancias del algoritmo o características propias del modelo.
+	\end{itemize}
+	
+	\vspace{0.5cm}
+	
+	\textbf{Conclusión:}  
+	El algoritmo de cinemática inversa utilizado logra encontrar soluciones con alta precisión en un número reducido de iteraciones. Esto sugiere una implementación eficiente y estable, adecuada para aplicaciones de control en tiempo real de robots articulados.
+	

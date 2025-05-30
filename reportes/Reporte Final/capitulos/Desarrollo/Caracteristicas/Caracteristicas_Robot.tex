@@ -23,21 +23,41 @@ Los parámetros utilizados son los siguientes:
 
 \subsection*{Tabla de parámetros DH y límites dinámicos}
 
-A continuación, se presenta la tabla DH del robot utilizado en este trabajo, junto con sus límites dinámicos para cada articulación:
+	
+	\section*{Parámetros Denavit-Hartenberg del Robot \texttt{robot0}}
+	
+	La siguiente tabla representa los parámetros Denavit-Hartenberg modificados del robot denominado \texttt{robot0}, el cual tiene 6 articulaciones rotacionales.
+	
+	\begin{table}[h!]
+		\centering
+		\begin{tabular}{ccccccccccc}
+			\toprule
+			\textbf{$\theta$} & \textbf{$d$} & \textbf{$a$} & \textbf{$\alpha$} & \textbf{tipo} & \textbf{min (°)} & \textbf{max (°)} & \textbf{$\dot{q}_{\text{max}}$ (°/s)} & \textbf{$\ddot{q}_{\text{max}}$ (°/s²)} \\
+			\midrule
+			2   & 39.91 & 0     & -90 & r & -90 & 90 & 180 & 360 \\
+			-90 & 0     & 44.8  & 0   & r & -90 & 90 & 180 & 360 \\
+			0   & 0     & 4.197 & -90 & r & -90 & 90 & 180 & 360 \\
+			0   & 45.1  & 0     & 90  & r & -90 & 90 & 180 & 360 \\
+			90  & 0     & 9.5   & 0   & r & -90 & 90 & 180 & 360 \\
+			\bottomrule
+		\end{tabular}
+		\caption{Parámetros DH del robot \texttt{robot0}. Todos los ángulos están en grados y las longitudes en centimetros.}
+	\end{table}
+	
+	\textbf{Descripción de cada parámetro:}
+	\begin{itemize}
+		\item $\theta$: Ángulo de rotación en torno al eje z del eslabón anterior.
+		\item $d$: Desplazamiento a lo largo del eje z del eslabón anterior.
+		\item $a$: Longitud del eslabón, medida en la dirección del eje x.
+		\item $\alpha$: Ángulo entre los ejes z consecutivos, medido alrededor del eje x.
+		\item \textbf{tipo}: Indica si la articulación es rotacional (\texttt{r}).
+		\item \textbf{min} y \textbf{max}: Límites del ángulo de cada articulación en grados.
+		\item $\dot{q}_{\text{max}}$: Velocidad angular máxima permitida por articulación (°/s).
+		\item $\ddot{q}_{\text{max}}$: Aceleración angular máxima permitida por articulación (°/s²).
+	\end{itemize}
+	
+	\textbf{Interpretación:}  
+	Este conjunto de parámetros define completamente la estructura geométrica y las limitaciones cinemáticas del robot. La uniformidad de los valores de velocidad y aceleración máxima indica que el robot fue modelado con restricciones homogéneas en cada articulación, lo cual es útil para simulaciones o análisis de control.
+	
 
-\begin{table}[H]
-	\centering
-	\caption{Parámetros DH y límites dinámicos del robot}
-	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
-		\hline
-		\textbf{N} & \(\theta\) & \(d\) & \(a\) & \(\alpha\) & Tipo & \(q_{\text{min}}\) & \(q_{\text{max}}\) & \(\dot{q}_{\text{max}}\) & \(\ddot{q}_{\text{max}}\) & \(\tau\) & \(\mu_s\) & \(\mu_k\) \\
-		\hline
-		1 & 0 & 7 & 3 & 0 & r & -90 & 90 & 180 & 360 & 8  & 0.1 & 0.2 \\
-		2 & 0 & 0 & 3 & -90 & r & -90 & 90 & 180 & 360 & 50 & 0.1 & 0.2 \\
-		3 & 0 & 2 & 2 & -90 & r & -90 & 90 & 180 & 360 & 30 & 0.1 & 0.2 \\
-		4 & 0 & 5 & 0 & 0 & p & 3 & 7 & 1 & 2 & 10 & 0.1 & 0.2 \\
-		\hline
-	\end{tabular}
-	\label{tab:parametros_dh_robot}
-\end{table}
 
